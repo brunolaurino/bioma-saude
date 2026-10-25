@@ -1,0 +1,140 @@
+# Ambiente de teste do Bioma CD: um ambiente isolado, igual ao que cada médico terá.
+# Só o Caddy publica portas. App, banco e Redis ficam na rede "interna", sem saída nem entrada externa.
+
+name: bioma
+
+x-app: &app
+  build: { context: ., dockerfile: docker/php/Dockerfile, target: app }
+  image: bioma-app:teste
+  restart: unless-stopped
+  read_only: true
+  tmpfs:
+    - /tmp:mode=1777
+    - /var/www/html/storage/framework/cache:uid=82,gid=82,mode=0700
+    - /var/www/html/bootstrap/cache:uid=82,gid=82,mode=0700
+  volumes:
+    - storage:/var/www/html/storage/app
+    - logs:/var/www/html/storage/logs
+    - sessions:/var/www/html/storage/framework/sessions
+    - views:/var/www/html/storage/framework/views
+  security_opt: [no-new-privileges:true]
+  cap_drop: [ALL]
+  networks: [interna]
+  secrets: [app_key, db_password, redis_password, bioma_kek, bioma_index_key]
+  environment: &env
+    APP_NAME: "Bioma CD"
+    APP_ENV: production
+    APP_DEBUG: "false"
+    APP_URL: https://${DOMAIN}
+    APP_LOCALE: pt_BR
+    APP_TIMEZONE: UTC
+    LOG_CHANNEL: stderr
+    LOG_LEVEL: info
+    DB_CONNECTION: mysql
+    DB_HOST: db
+    DB_PORT: "3306"
+    DB_DATABASE: bioma
+    DB_USERNAME: bioma
+    REDIS_HOST: redis
+    REDIS_CLIENT: phpredis
+    # Sessões no banco: o app lista os aparelhos conectados e encerra sessões de outros aparelhos.
+    # Os limites por perfil (15 min parado para profissional, 30 dias para paciente) ficam no app.
+    SESSION_DRIVER: database
+    SESSION_COOKIE: __Host-bioma
+    SESSION_PATH: /
+    SESSION_DOMAIN: ""
+    SESSION_SECURE_COOKIE: "true"
+    SESSION_HTTP_ONLY: "true"
+    SESSION_SAME_SITE: lax
+    SESSION_ENCRYPT: "true"
+    SESSION_LIFETIME: "43200"
+    MAIL_MAILER: ${MAIL_MAILER:-log}
+    MAIL_HOST: ${MAIL_HOST:-}
+    MAIL_PORT: ${MAIL_PORT:-587}
+    MAIL_USERNAME: ${MAIL_USERNAME:-}
+    MAIL_FROM_ADDRESS: ${MAIL_FROM_ADDRESS:-nao-responda@exemplo.com.br}
+    MAIL_FROM_NAME: "Bioma CD"
+    CACHE_STORE: redis
+    QUEUE_CONNECTION: redis
+  depends_on:
+    db: { condition: service_healthy }
+    redis: { condition: service_healthy }
+
+services:
+  web:
+    build: { context: ., dockerfile: docker/php/Dockerfile, target: web }
+    image: bioma-web:teste
+    restart: unless-stopped
+    ports: ["80:80", "443:443", "443:443/udp"]
+    environment:
+      DOMAIN: ${DOMAIN}
+      ACME_EMAIL: ${ACME_EMAIL}
+    volumes: [caddy_data:/data, caddy_config:/config]
+    networks: [publica, interna]
+    depends_on: [app]
+
+  app:
+    <<: *app
+    environment:
+      <<: *env
+      BIOMA_ROLE: app
+    healthcheck:
+      test: ["CMD-SHELL", "php-fpm -t 2>/dev/null"]
+      interval: 30s
+
+  worker:
+    <<: *app
+    command: ["php", "artisan", "queue:work", "--sleep=3", "--tries=3", "--max-time=3600"]
+    environment:
+      <<: *env
+      BIOMA_ROLE: worker
+    depends_on: [app]
+
+  scheduler:
+    <<: *app
+    environment:
+      <<: *env
+      BIOMA_ROLE: scheduler
+    depends_on: [app]
+
+  db:
+    image: mysql:8.4
+    restart: unless-stopped
+    command: ["--local-infile=0", "--skip-name-resolve"]
+    environment:
+      MYSQL_DATABASE: bioma
+      MYSQL_USER: bioma
+      MYSQL_PASSWORD_FILE: /run/secrets/db_password
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
+    secrets: [db_password, db_root_password]
+    volumes: [db:/var/lib/mysql]
+    networks: [interna]
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p\"$$(cat /run/secrets/db_root_password)\" --silent"]
+      interval: 10s
+      retries: 12
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: ["sh", "-c", "exec redis-server --requirepass \"$$(cat /run/secrets/redis_password)\" --appendonly yes"]
+    secrets: [redis_password]
+    volumes: [redis:/data]
+    networks: [interna]
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli -a \"$$(cat /run/secrets/redis_password)\" --no-auth-warning ping | grep -q PONG"]
+      interval: 10s
+
+networks:
+  publica: {}
+  interna: { internal: true }
+
+secrets:
+  app_key: { file: ./secrets/app_key }
+  db_password: { file: ./secrets/db_password }
+  db_root_password: { file: ./secrets/db_root_password }
+  redis_password: { file: ./secrets/redis_password }
+  bioma_kek: { file: ./secrets/bioma_kek }
+  bioma_index_key: { file: ./secrets/bioma_index_key }
+
+volumes: { storage: {}, logs: {}, sessions: {}, views: {}, db: {}, redis: {}, caddy_data: {}, caddy_config: {} }

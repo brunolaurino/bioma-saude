@@ -1,0 +1,29 @@
+AVISO DE PRIVACIDADE · {clinica}
+
+1. Quem cuida dos seus dados
+O controlador dos seus dados é {controlador} ({documento_controlador}). O encarregado pelo tratamento de dados pessoais (DPO) é {encarregado}, que atende pelo contato {contato_encarregado}.
+A plataforma Bioma CD é operada por {operador}, que trata os dados apenas para manter o sistema funcionando, seguindo as instruções do controlador.
+
+2. Quais dados usamos
+- Dados de cadastro: nome, e-mail, telefone, data de nascimento e altura.
+- Dados de saúde que você ou a equipe registram: bioimpedância, metas diárias, sintomas, treinos, desabafos compartilhados, exames, fotos de evolução, planos alimentares e anotações de consulta.
+- Dados de uso e segurança: data e hora de acesso, endereço IP e aparelho, para proteger sua conta.
+
+3. Para que usamos
+Para acompanhar seu tratamento e permitir que a equipe que cuida de você veja sua evolução (LGPD, art. 11, II, f: tutela da saúde, por profissionais de saúde). Para cumprir a guarda obrigatória do prontuário (art. 11, II, a). Fotos corporais só são guardadas com o seu consentimento específico, que pode ser retirado quando quiser (art. 11, I).
+Seus dados não são vendidos, não são usados para publicidade e não saem do Brasil sem as garantias da lei.
+
+4. Quem pode ver
+Só os profissionais da equipe que acompanha você, e só as partes liberadas para cada um. Desabafos ficam privados, a menos que você escolha compartilhar. Todo acesso da equipe fica registrado e você pode ver esse registro no app.
+
+5. Como protegemos
+Os dados de saúde ficam cifrados com uma chave exclusiva sua. Profissionais entram com senha e segundo fator. O consultório tem um ambiente separado dos outros consultórios.
+
+6. Por quanto tempo guardamos
+O prontuário é guardado pelo prazo legal (no mínimo 20 anos, Lei 13.787/2018). Dados que não fazem parte do prontuário, como fotos e desabafos privados, são apagados quando você pede ou quando o acompanhamento termina.
+
+7. Seus direitos
+Você pode, a qualquer momento e direto no app: confirmar e acessar seus dados, baixar uma cópia, corrigir dados, pedir a eliminação do que não é obrigatório guardar, retirar consentimentos e saber com quem os dados foram compartilhados. Pedidos são respondidos em até 15 dias. Você também pode falar com a Autoridade Nacional de Proteção de Dados (ANPD).
+
+8. Mudanças neste aviso
+Quando houver mudança importante, o app vai pedir que você leia e confirme a nova versão.

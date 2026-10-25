@@ -1,0 +1,1 @@
+@include('errors.layout', ['icon' => 'clock-rotate-left', 'heading' => 'A página expirou', 'text' => 'Por segurança, formulários abertos há muito tempo deixam de valer. Volte, recarregue e tente de novo.'])

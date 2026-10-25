@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#17643b">
+<meta name="robots" content="noindex, nofollow">
+<title>{{ $title ?? 'Bioma CD' }} · Bioma CD</title>
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/icons/icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="/icons/icon-192.png">
+<link rel="stylesheet" href="/css/tokens.css?v=1">
+<link rel="stylesheet" href="/css/components.css?v=1">
+<link rel="stylesheet" href="/vendor/fontawesome/css/fontawesome.min.css">
+<link rel="stylesheet" href="/vendor/fontawesome/css/solid.min.css">
+<link rel="stylesheet" href="/vendor/fontawesome/css/regular.min.css">
+<link rel="stylesheet" href="/css/app.css?v=1">
+<script src="/js/app.js?v=1" defer></script>
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+@yield('body')
+@include('partials.toast')
+@include('partials.confirm')
+</body>
+</html>
