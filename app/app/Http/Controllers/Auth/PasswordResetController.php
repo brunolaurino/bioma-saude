@@ -34,8 +34,8 @@ class PasswordResetController extends Controller
             );
             $link = route('password.reset', $token);
             try {
-                Mail::raw("Para criar uma nova senha no Bioma CD, abra este link em até 30 minutos:\n\n$link\n\nSe você não pediu, ignore este e-mail. Sua senha continua a mesma.", function ($m) use ($user) {
-                    $m->to($user->email)->subject('Bioma CD: criar nova senha');
+                Mail::raw("Para criar uma nova senha no Saúde App, abra este link em até 30 minutos:\n\n$link\n\nSe você não pediu, ignore este e-mail. Sua senha continua a mesma.", function ($m) use ($user) {
+                    $m->to($user->email)->subject('Saúde App: criar nova senha');
                 });
             } catch (\Throwable $e) {
                 Log::warning('Falha ao enviar e-mail de recuperação de senha.');

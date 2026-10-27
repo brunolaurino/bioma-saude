@@ -1,4 +1,4 @@
-/* Bioma CD — melhorias progressivas. Tudo funciona sem JavaScript; aqui só fica mais rápido e agradável. */
+/* Saúde App — melhorias progressivas. Tudo funciona sem JavaScript; aqui só fica mais rápido e agradável. */
 (function () {
   'use strict';
 

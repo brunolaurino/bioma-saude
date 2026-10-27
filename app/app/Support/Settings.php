@@ -17,7 +17,7 @@ class Settings
         'controller_document' => '',
         'dpo_name' => '',
         'dpo_contact' => '',
-        'operator_name' => 'Bioma CD Tecnologia',
+        'operator_name' => 'Saúde App Tecnologia',
         'operator_document' => '',
         'water_ml_per_kg' => '35',
         'protein_g_per_kg' => '1,4',

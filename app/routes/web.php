@@ -8,7 +8,7 @@ use App\Http\Controllers\PublicController;
 use Illuminate\Support\Facades\Route;
 
 /*
-| Rotas do Bioma CD. O paciente usa o app (celular) na raiz; o profissional usa o painel em /painel.
+| Rotas do Saúde App. O paciente usa o app (celular) na raiz; o profissional usa o painel em /painel.
 | Toda rota com dado de paciente passa por autenticação, tempo de sessão e checagem de acesso.
 */
 

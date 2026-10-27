@@ -2,7 +2,7 @@ AVISO DE PRIVACIDADE · {clinica}
 
 1. Quem cuida dos seus dados
 O controlador dos seus dados é {controlador} ({documento_controlador}). O encarregado pelo tratamento de dados pessoais (DPO) é {encarregado}, que atende pelo contato {contato_encarregado}.
-A plataforma Bioma CD é operada por {operador}, que trata os dados apenas para manter o sistema funcionando, seguindo as instruções do controlador.
+A plataforma Saúde App é operada por {operador}, que trata os dados apenas para manter o sistema funcionando, seguindo as instruções do controlador.
 
 2. Quais dados usamos
 - Dados de cadastro: nome, e-mail, telefone, data de nascimento e altura.

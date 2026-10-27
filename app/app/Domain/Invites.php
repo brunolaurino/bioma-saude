@@ -45,11 +45,11 @@ class Invites
     public static function mail(User $user, string $code, string $who): void
     {
         $body = $user->isProfessional()
-            ? "Olá! $who convidou você para a equipe no Bioma CD.\n\nAbra este link para criar sua conta:\n\n".route('setup', str_replace('-', '', $code))."\n\nO link vale por 7 dias e só pode ser usado uma vez."
-            : "Olá! $who convidou você para o Bioma CD.\n\nAbra ".route('first')." e digite o código:\n\n$code\n\nO código vale por 7 dias e só pode ser usado uma vez.";
+            ? "Olá! $who convidou você para a equipe no Saúde App.\n\nAbra este link para criar sua conta:\n\n".route('setup', str_replace('-', '', $code))."\n\nO link vale por 7 dias e só pode ser usado uma vez."
+            : "Olá! $who convidou você para o Saúde App.\n\nAbra ".route('first')." e digite o código:\n\n$code\n\nO código vale por 7 dias e só pode ser usado uma vez.";
         try {
             Mail::raw($body, function ($m) use ($user) {
-                $m->to($user->email)->subject('Seu convite para o Bioma CD');
+                $m->to($user->email)->subject('Seu convite para o Saúde App');
             });
         } catch (\Throwable $e) {
             Log::warning('Falha ao enviar e-mail de convite.');

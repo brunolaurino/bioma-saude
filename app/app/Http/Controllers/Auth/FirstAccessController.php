@@ -155,7 +155,7 @@ class FirstAccessController extends Controller
         $request->session()->put('auth.last_seen', time());
         Audit::log('auth.first_access', 'user:'.$user->id, $patient->id);
 
-        return redirect()->route('home')->with('status', 'Bem-vindo ao Bioma CD!');
+        return redirect()->route('home')->with('status', 'Bem-vindo ao Saúde App!');
     }
 
     private function invite(Request $request): ?Invitation

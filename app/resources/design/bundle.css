@@ -1,4 +1,4 @@
-/* Bioma CD — componentes. Classes bc-*, todas as cores e medidas vêm de tokens.css. */
+/* Saúde App — componentes. Classes bc-*, todas as cores e medidas vêm de tokens.css. */
 body{font-family:var(--font-sans);color:var(--ink);background:var(--surface);font-size:16px;line-height:24px;margin:0}
 .bc-tnum{font-variant-numeric:tabular-nums}
 .bc-stack{display:flex;flex-direction:column;gap:var(--space-3)}

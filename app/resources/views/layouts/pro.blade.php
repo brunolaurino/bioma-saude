@@ -13,8 +13,8 @@
   $active = fn ($name) => $r === $name || ($name === 'pro.patients' && str_starts_with($r, 'pro.patient')) || ($name === 'pro.settings' && in_array($r, ['pro.audit', 'pro.requests', 'pro.incidents', 'pro.account'], true));
 @endphp
 <div class="app-pro">
-  <aside class="side" aria-label="Menu do painel">
-    <div class="side__brand"><span class="brand-mark"><x-ic n="leaf" /></span><div><b>Bioma CD</b><div class="t-overline muted">Painel profissional</div></div></div>
+  <aside class="side on-dark" aria-label="Menu do painel">
+    <div class="side__brand"><x-brand :size="44" /><div><b>Saúde App</b><div class="t-overline muted">Painel profissional</div></div></div>
     <nav>
       @foreach ($items as [$name, $ic, $label, $count, $bad])
         <a class="side__link" href="{{ route($name) }}" @if($active($name)) aria-current="page" @endif><span class="ic-col"><x-ic :n="$ic" /></span><span class="grow">{{ $label }}</span>@if ($count)<span class="count {{ $bad ? 'count--bad' : '' }}">{{ $count }}</span>@endif</a>
@@ -32,6 +32,7 @@
     </div>
   </aside>
   <main id="conteudo">
+    @unless (View::hasSection('banner'))
     <x-header :title="$title ?? ''" :sub="$sub ?? null" :back="$back ?? null">
       <x-slot:right>
         <div class="flex gap-2">
@@ -40,8 +41,10 @@
         </div>
       </x-slot:right>
     </x-header>
+    @endunless
     @yield('subnav')
     <div class="pro-content">
+      @yield('banner')
       @yield('content')
     </div>
   </main>

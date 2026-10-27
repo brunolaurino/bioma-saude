@@ -1,8 +1,8 @@
 @extends('layouts.entry', ['title' => 'Entrar'])
 @section('content')
 <div class="center stack-3">
-  <span class="brand-mark brand-mark--lg"><x-ic n="leaf" /></span>
-  <h1 class="t-title">Bioma CD<br><span class="normal muted t-heading">Plataforma de Evolução Saudável</span></h1>
+  <x-brand :size="84" />
+  <h1 class="t-display">Saúde App<br><span class="normal tagline">Cuidado que acompanha você</span></h1>
   <p class="t-caption muted">Acompanhamento de {{ $lead }}</p>
 </div>
 <form method="POST" action="{{ route('login') }}" class="stack-4 mt-6" novalidate>

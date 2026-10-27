@@ -16,7 +16,7 @@
   @if ($showInstall)
   <div class="notice notice--dashed">
     <span class="ic"><x-ic n="mobile-screen-button" /></span>
-    <div class="grow t-caption"><b>Instale o Bioma CD</b>Abra direto da tela inicial, como um aplicativo.</div>
+    <div class="grow t-caption"><b>Instale o Saúde App</b>Abra direto da tela inicial, como um aplicativo.</div>
     <button type="button" class="bc-btn bc-btn--secondary bc-btn--sm" data-open="sheet-install">Instalar</button>
     <form method="POST" action="{{ route('install.dismiss') }}">@csrf<button class="bc-iconbtn" aria-label="Dispensar"><x-ic n="xmark" /></button></form>
   </div>
@@ -29,7 +29,7 @@
       $prog = $goalW !== null && $first['w'] != $goalW ? max(0, min(100, ($first['w'] - $last['w']) / ($first['w'] - $goalW) * 100)) : null;
       $since = Fmt::daysAgo($last['d']);
     @endphp
-    <a class="bc-card bc-card--action p-4 stack-3" href="{{ route('evolution') }}">
+    <a class="bc-card bc-card--action hero-card on-dark p-4 stack-3" href="{{ route('evolution') }}">
       <div class="between flex-start">
         <div>
           <div class="t-caption bold muted"><x-ic n="weight-scale" /> Peso atual</div>
@@ -59,6 +59,8 @@
       <x-ic n="chevron-right" class="muted" />
     </a>
   @endif
+
+  @include('patient.partials.quick-tiles')
 
   @if ($active)
   <x-section title="Metas de hoje">

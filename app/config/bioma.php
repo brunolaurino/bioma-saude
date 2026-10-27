@@ -1,7 +1,7 @@
 <?php
 
 /*
-| Configuração própria do Bioma CD. Os segredos (KEK e chave do índice cego) vêm de
+| Configuração própria do Saúde App. Os segredos (KEK e chave do índice cego) vêm de
 | variáveis de ambiente que o entrypoint lê de /run/secrets; nunca ficam no Git.
 */
 

@@ -1,7 +1,20 @@
 @extends('layouts.pro', ['title' => $greeting, 'sub' => \App\Support\Fmt::wdl(\App\Support\Clock::today()).', '.\App\Support\Fmt::dmy(\App\Support\Clock::today())])
 @php use App\Support\{Clock, Fmt}; $byName = $byId->map(fn ($p) => $p->name); @endphp
-@section('actions')
-<a class="bc-btn bc-btn--primary bc-btn--sm sm-hide" href="{{ route('pro.patients.create') }}"><x-ic n="user-plus" /> Novo paciente</a>
+@section('banner')
+<section class="pro-banner on-dark">
+  <div class="grow">
+    <div class="t-caption muted">{{ Fmt::wdl(Clock::today()) }}, {{ Fmt::dmy(Clock::today()) }}</div>
+    <h1 class="pro-banner__title">{{ $greeting }}</h1>
+    <p class="pro-banner__text">
+      @if ($proNav['agenda']){{ $appointments->count() }} {{ Fmt::plural($appointments->count(), 'consulta', 'consultas') }} hoje · @endif
+      {{ $alerts->count() }} {{ Fmt::plural($alerts->count(), 'alerta aberto', 'alertas abertos') }}
+    </p>
+  </div>
+  <div class="pro-banner__actions">
+    @if ($proNav['agenda'])<a class="bc-btn bc-btn--glass" href="{{ route('pro.agenda') }}"><x-ic n="calendar-days" /> Agenda</a>@endif
+    <a class="bc-btn bc-btn--primary" href="{{ route('pro.patients.create') }}"><x-ic n="user-plus" /> Novo paciente</a>
+  </div>
+</section>
 @endsection
 @section('content')
 <div class="grid-2 lg-grid-4">

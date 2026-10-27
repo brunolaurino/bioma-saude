@@ -21,7 +21,7 @@ class TwoFactorController extends Controller
         $request->session()->put('2fa.pending', $secret);
 
         return view('auth.2fa-setup', [
-            'qr' => TwoFactor::qrSvg($user->email, $secret, 'Bioma CD'),
+            'qr' => TwoFactor::qrSvg($user->email, $secret, 'Saúde App'),
             'secret' => trim(chunk_split($secret, 4, ' ')),
         ]);
     }

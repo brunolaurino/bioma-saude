@@ -97,8 +97,8 @@ class LoginController extends Controller
             $fill['locked_until'] = now()->addMinutes($minutes);
             if ($fails === $lockAfter) {
                 try {
-                    Mail::raw("Houve $fails tentativas de entrar na sua conta do Bioma CD com a senha errada. Por segurança, ela ficou bloqueada por $minutes minutos. Se não foi você, troque sua senha pela opção \"Esqueci minha senha\".", function ($m) use ($user) {
-                        $m->to($user->email)->subject('Bioma CD: tentativas de acesso à sua conta');
+                    Mail::raw("Houve $fails tentativas de entrar na sua conta do Saúde App com a senha errada. Por segurança, ela ficou bloqueada por $minutes minutos. Se não foi você, troque sua senha pela opção \"Esqueci minha senha\".", function ($m) use ($user) {
+                        $m->to($user->email)->subject('Saúde App: tentativas de acesso à sua conta');
                     });
                 } catch (\Throwable $e) {
                     Log::warning('Falha ao enviar aviso de bloqueio de conta.');

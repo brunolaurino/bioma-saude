@@ -1,6 +1,6 @@
 <?php
 
-// Gera public/css/tokens.css a partir de tokens.json (design system Bioma CD).
+// Gera public/css/tokens.css a partir de tokens.json (design system Saúde App).
 // Uso: php resources/design/build-tokens.php
 
 $tokens = json_decode(file_get_contents(__DIR__.'/tokens.json'), true, flags: JSON_THROW_ON_ERROR);
@@ -45,7 +45,7 @@ $plain['font-sans'] = $tokens['type']['families']['sans'];
 
 $block = fn (array $kv) => implode("\n", array_map(fn ($k, $v) => "  --$k: $v;", array_keys($kv), $kv));
 
-$css = "/* Bioma CD — gerado de resources/design/tokens.json. Não edite à mão. */\n";
+$css = "/* Saúde App — gerado de resources/design/tokens.json. Não edite à mão. */\n";
 $css .= ":root {\n  color-scheme: light dark;\n".$block($plain)."\n".$block($vars['light'])."\n}\n";
 $css .= "@media (prefers-color-scheme: dark) {\n  :root:not([data-theme=\"light\"]) {\n".str_replace("\n  ", "\n    ", '  '.$block($vars['dark']))."\n  }\n}\n";
 $css .= ":root[data-theme=\"dark\"] {\n".$block($vars['dark'])."\n}\n";

@@ -7,7 +7,7 @@
 @php([$icon, $heading, $text] = $slides[$step - 1])
 @section('content')
 <div class="between">
-  <span class="flex gap-2 bold"><span class="brand-mark"><x-ic n="leaf" /></span>Bioma CD</span>
+  <span class="flex gap-2 bold"><x-brand :size="32" />Saúde App</span>
   <a class="bc-link" href="{{ route('login') }}">Pular</a>
 </div>
 <div class="grow flex-col-center center stack-5">

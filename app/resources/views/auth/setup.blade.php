@@ -2,7 +2,7 @@
 @section('content')
 <div class="center stack-3">
   <span class="brand-mark brand-mark--lg"><x-ic n="user-doctor" /></span>
-  <h1 class="t-title">{{ $kind === 'master' ? 'Configurar o Bioma CD' : 'Entrar para a equipe' }}</h1>
+  <h1 class="t-title">{{ $kind === 'master' ? 'Configurar o Saúde App' : 'Entrar para a equipe' }}</h1>
   <p class="muted">{{ $kind === 'master' ? 'Você será o responsável (master) por este ambiente: liga e desliga funções, convida a equipe e responde pelos dados.' : 'Olá, '.$name.'. Crie sua senha para acessar o painel.' }}</p>
 </div>
 <form method="POST" action="{{ route('setup', $token) }}" class="stack-4 mt-6" novalidate>

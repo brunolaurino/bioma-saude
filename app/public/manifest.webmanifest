@@ -1,13 +1,13 @@
 {
-  "name": "Bioma CD",
-  "short_name": "Bioma CD",
+  "name": "Saúde App",
+  "short_name": "Saúde App",
   "description": "Acompanhamento de saúde com a sua equipe",
   "lang": "pt-BR",
   "start_url": "/inicio",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#ffffff",
+  "background_color": "#f3f9f5",
   "theme_color": "#17643b",
   "icons": [
     { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },

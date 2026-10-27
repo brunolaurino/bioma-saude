@@ -1,6 +1,6 @@
 <?php
 
-// Mensagens padrão em português. Os formulários do Bioma CD já trazem mensagens próprias para
+// Mensagens padrão em português. Os formulários do Saúde App já trazem mensagens próprias para
 // os campos principais; estas cobrem o resto.
 return [
     'accepted' => 'Marque :attribute para continuar.',

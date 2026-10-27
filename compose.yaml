@@ -1,4 +1,4 @@
-# Ambiente de teste do Bioma CD: um ambiente isolado, igual ao que cada médico terá.
+# Ambiente de teste do Saúde App: um ambiente isolado, igual ao que cada médico terá.
 # Só o Caddy publica portas. App, banco e Redis ficam na rede "interna", sem saída nem entrada externa.
 
 name: bioma
@@ -22,7 +22,7 @@ x-app: &app
   networks: [interna]
   secrets: [app_key, db_password, redis_password, bioma_kek, bioma_index_key]
   environment: &env
-    APP_NAME: "Bioma CD"
+    APP_NAME: "Saúde App"
     APP_ENV: production
     APP_DEBUG: "false"
     APP_URL: https://${DOMAIN}
@@ -53,7 +53,7 @@ x-app: &app
     MAIL_PORT: ${MAIL_PORT:-587}
     MAIL_USERNAME: ${MAIL_USERNAME:-}
     MAIL_FROM_ADDRESS: ${MAIL_FROM_ADDRESS:-nao-responda@exemplo.com.br}
-    MAIL_FROM_NAME: "Bioma CD"
+    MAIL_FROM_NAME: "Saúde App"
     CACHE_STORE: redis
     QUEUE_CONNECTION: redis
   depends_on:

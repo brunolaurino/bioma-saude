@@ -37,5 +37,5 @@
   @csrf
   <button class="bc-listrow bc-listrow--danger w-full"><span class="bc-listrow__icon"><x-ic n="right-from-bracket" /></span><span class="bc-listrow__text">Sair</span></button>
 </form>
-<p class="t-caption muted center">Bioma CD · versão 1.0 · <a class="bc-link" href="{{ route('about') }}">Sobre</a></p>
+<p class="t-caption muted center">Saúde App · versão 1.0 · <a class="bc-link" href="{{ route('about') }}">Sobre</a></p>
 @endsection
