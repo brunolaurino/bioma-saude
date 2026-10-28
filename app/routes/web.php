@@ -6,6 +6,7 @@ use App\Http\Controllers\Patient;
 use App\Http\Controllers\Pro;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\PushController;
+use App\Http\Controllers\ThemeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,6 +18,7 @@ Route::get('/', [PublicController::class, 'root'])->name('root');
 Route::get('/bem-vindo', [PublicController::class, 'onboarding'])->name('onboarding');
 Route::get('/aviso-de-privacidade', [PublicController::class, 'notice'])->name('privacy.notice');
 Route::get('/sobre', [PublicController::class, 'about'])->name('about');
+Route::post('/tema', [ThemeController::class, 'store'])->middleware('throttle:60,1')->name('theme');
 
 // ---------- Entrada ----------
 Route::middleware('guest')->group(function () {

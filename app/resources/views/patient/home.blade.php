@@ -1,10 +1,12 @@
 @extends('layouts.patient', ['title' => 'Início'])
 @php use App\Domain\Indicators; use App\Support\{Clock, Fmt}; @endphp
 @section('tab', 'home')
+@section('page', 'home')
 @section('header')
-<x-header :title="'Olá, '.$patient->firstName()" :sub="Fmt::wdl(Clock::today()).', '.Fmt::dmy(Clock::today())">
+<x-header class="bc-header--home" :title="'Olá, '.$patient->firstName()" :sub="Fmt::wdl(Clock::today()).', '.Fmt::dmy(Clock::today())">
   <x-slot:left><a href="{{ route('profile') }}" aria-label="Meu perfil"><x-avatar :name="$patient->name" /></a></x-slot:left>
   <x-slot:right>
+    <x-theme-toggle />
     <a class="bc-iconbtn" href="{{ route('notifications') }}" aria-label="Notificações">
       <x-ic n="bell" />@if ($nav['unread'] > 0)<span class="bc-badge">{{ $nav['unread'] }}</span>@endif
     </a>
@@ -12,6 +14,12 @@
 </x-header>
 @endsection
 @section('content')
+@php $h = (int) Clock::local(Clock::now())->format('G'); @endphp
+<div class="greet">
+  <span>{{ $h < 12 ? 'Bom dia' : ($h < 18 ? 'Boa tarde' : 'Boa noite') }}, {{ $patient->firstName() }}</span>
+  <b>Como está sua saúde hoje?</b>
+  <small>{{ Fmt::wdl(Clock::today()) }}, {{ Fmt::dmy(Clock::today()) }}</small>
+</div>
 <div class="screen">
   @if ($showInstall)
   <div class="notice notice--dashed">
@@ -29,7 +37,7 @@
       $prog = $goalW !== null && $first['w'] != $goalW ? max(0, min(100, ($first['w'] - $last['w']) / ($first['w'] - $goalW) * 100)) : null;
       $since = Fmt::daysAgo($last['d']);
     @endphp
-    <a class="bc-card bc-card--action hero-card on-dark p-4 stack-3" href="{{ route('evolution') }}">
+    <a class="bc-card bc-card--action hero-card p-4 stack-3" href="{{ route('evolution') }}">
       <div class="between flex-start">
         <div>
           <div class="t-caption bold muted"><x-ic n="weight-scale" /> Peso atual</div>

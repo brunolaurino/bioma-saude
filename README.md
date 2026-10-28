@@ -78,6 +78,10 @@ Quem já tinha subido antes do push: rode `bash scripts/gerar-segredos.sh` de no
 | Dados de demonstração | `php artisan bioma:demo` (só fora de produção e com banco vazio) |
 | Código do 2FA de uma conta da demo | `php artisan bioma:codigo marina@demo.bioma.local` (só fora de produção) |
 
+## Tema claro e escuro
+
+Por padrão o app segue o tema do celular ou do computador. A pessoa troca pelo botão de lua/sol (tela inicial, entrada e menu do painel) ou em **Perfil › Aparência** e **Minha conta › Aparência** (Automático, Claro, Escuro). A escolha fica num cookie `tema`, sem dado pessoal, e vira `data-theme` no `<html>`. As cores dos dois temas ficam em `app/public/css/tokens.css` e `app/public/css/theme.css`.
+
 ## Notificações push
 
 O paciente ativa em **Perfil › Notificações no celular** e a equipe em **Minha conta**. Funciona no Android (Chrome, Edge, Firefox) e no computador. No iPhone, só com o app adicionado à tela de início (iOS 16.4 ou mais novo). Os envios vão pela fila (`worker`), junto dos lembretes e avisos do sino. Sem `BIOMA_VAPID_PUBLIC` e `BIOMA_VAPID_PRIVATE` o cartão não aparece e nada é enviado.

@@ -155,6 +155,36 @@
     }
   });
 
+  // ---------- Tema claro/escuro ----------
+  // A troca é na hora (atributo data-theme no <html>); o servidor só guarda a escolha num cookie.
+  var darkMq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+  function effectiveTheme() {
+    var t = document.documentElement.getAttribute('data-theme');
+    return t || (darkMq && darkMq.matches ? 'dark' : 'light');
+  }
+  function applyTheme(choice) {
+    if (choice === 'auto') document.documentElement.removeAttribute('data-theme');
+    else document.documentElement.setAttribute('data-theme', choice === 'escuro' ? 'dark' : 'light');
+    all('[data-theme-choice] [name="tema"]').forEach(function (b) { b.setAttribute('aria-current', b.value === choice ? 'true' : 'false'); });
+    all('[data-theme-toggle] input[name="tema"]').forEach(function (i) { i.value = effectiveTheme() === 'dark' ? 'claro' : 'escuro'; });
+  }
+  function saveTheme(form, choice) {
+    var fd = new FormData(form);
+    fd.set('tema', choice);
+    return fetch(form.action, { method: 'POST', body: fd, credentials: 'same-origin', headers: { Accept: 'application/json' } });
+  }
+  document.addEventListener('submit', function (e) {
+    var form = e.target, choice;
+    if (form.hasAttribute('data-theme-toggle')) choice = effectiveTheme() === 'dark' ? 'claro' : 'escuro';
+    else if (form.hasAttribute('data-theme-choice') && e.submitter) choice = e.submitter.value;
+    else return;
+    if (!window.fetch || !window.FormData) return; // sem fetch, o formulário segue e a página recarrega
+    e.preventDefault();
+    e.stopPropagation();
+    applyTheme(choice);
+    saveTheme(form, choice).catch(function () {});
+  }, true);
+
   // ---------- Notificações push ----------
   var canPush = 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window && window.isSecureContext;
   function b64ToBytes(s) {

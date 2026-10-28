@@ -1,5 +1,5 @@
 @props(['title', 'sub' => null, 'back' => null])
-<header class="bc-header">
+<header {{ $attributes->merge(['class' => 'bc-header']) }}>
   @if ($back)
     <a class="bc-iconbtn" href="{{ $back }}" aria-label="Voltar"><x-ic n="arrow-left" /></a>
   @else

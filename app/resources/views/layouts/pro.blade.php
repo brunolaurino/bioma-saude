@@ -14,7 +14,7 @@
 @endphp
 <div class="app-pro">
   <aside class="side on-dark" aria-label="Menu do painel">
-    <div class="side__brand"><x-brand :size="44" /><div><b>Saúde App</b><div class="t-overline muted">Painel profissional</div></div></div>
+    <div class="side__brand"><x-brand :size="44" /><div class="grow"><b>Saúde App</b><div class="t-overline muted">Painel profissional</div></div><x-theme-toggle /></div>
     <nav>
       @foreach ($items as [$name, $ic, $label, $count, $bad])
         <a class="side__link" href="{{ route($name) }}" @if($active($name)) aria-current="page" @endif><span class="ic-col"><x-ic :n="$ic" /></span><span class="grow">{{ $label }}</span>@if ($count)<span class="count {{ $bad ? 'count--bad' : '' }}">{{ $count }}</span>@endif</a>
@@ -37,6 +37,7 @@
       <x-slot:right>
         <div class="flex gap-2">
           @yield('actions')
+          <x-theme-toggle class="md-hide" />
           <a class="bc-iconbtn md-hide" href="{{ route('pro.settings') }}" aria-label="Configurações"><x-ic n="gear" /></a>
         </div>
       </x-slot:right>

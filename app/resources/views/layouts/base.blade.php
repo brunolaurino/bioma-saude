@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-BR"@if ($theme = \App\Support\Theme::attr()) data-theme="{{ $theme }}"@endif>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -20,9 +20,9 @@
 <link rel="stylesheet" href="/vendor/fontawesome/css/solid.min.css">
 <link rel="stylesheet" href="/vendor/fontawesome/css/regular.min.css">
 <link rel="stylesheet" href="/css/app.css?v=2" data-turbo-track="reload">
-<link rel="stylesheet" href="/css/theme.css?v=2" data-turbo-track="reload">
+<link rel="stylesheet" href="/css/theme.css?v=3" data-turbo-track="reload">
 <script src="/vendor/turbo/turbo.js?v=8.0.12" defer data-turbo-track="reload"></script>
-<script src="/js/app.js?v=3" defer data-turbo-track="reload"></script>
+<script src="/js/app.js?v=4" defer data-turbo-track="reload"></script>
 </head>
 <body>
 <a class="skip" href="#conteudo">Pular para o conteúdo</a>

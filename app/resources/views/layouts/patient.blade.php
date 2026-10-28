@@ -1,7 +1,7 @@
 @extends('layouts.base')
 @section('body')
 @php($hasTabs = View::hasSection('tab'))
-<div class="app-patient">
+<div @class(['app-patient', 'page-'.trim(View::yieldContent('page')) => View::hasSection('page')])>
   @yield('header')
   <main id="conteudo" @class(['no-tabs' => ! $hasTabs])>
     @yield('content')
