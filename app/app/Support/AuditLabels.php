@@ -34,6 +34,8 @@ class AuditLabels
         'patient.data.update' => 'Atualizou dados de cadastro',
         'auth.login' => 'Entrou no app',
         'auth.logout' => 'Saiu do app',
+        'push.subscribe' => 'Ativou notificações no aparelho',
+        'push.unsubscribe' => 'Desativou notificações no aparelho',
         'auth.account_created' => 'Criou a conta',
         'auth.first_access' => 'Fez o primeiro acesso',
         'auth.password.change' => 'Trocou a senha',

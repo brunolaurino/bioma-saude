@@ -155,6 +155,99 @@
     }
   });
 
+  // ---------- Notificações push ----------
+  var canPush = 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window && window.isSecureContext;
+  function b64ToBytes(s) {
+    var raw = atob((s + '==='.slice((s.length + 3) % 4)).replace(/-/g, '+').replace(/_/g, '/'));
+    var out = new Uint8Array(raw.length);
+    for (var i = 0; i < raw.length; i++) out[i] = raw.charCodeAt(i);
+    return out;
+  }
+  function bytesToB64(buf) {
+    var s = '', b = new Uint8Array(buf);
+    for (var i = 0; i < b.length; i++) s += String.fromCharCode(b[i]);
+    return btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  }
+  function sha256Hex(text) {
+    return crypto.subtle.digest('SHA-256', new TextEncoder().encode(text)).then(function (h) {
+      return Array.prototype.map.call(new Uint8Array(h), function (x) { return ('0' + x.toString(16)).slice(-2); }).join('');
+    });
+  }
+  function currentSub() {
+    if (!canPush) return Promise.resolve(null);
+    return navigator.serviceWorker.ready.then(function (r) { return r.pushManager.getSubscription(); });
+  }
+  function isIos() { return /iPhone|iPad|iPod/.test(navigator.userAgent); }
+  function isStandalone() { return window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true; }
+
+  function setupPush() {
+    // Ao sair da conta, este aparelho deixa de receber push.
+    all('form[action$="/sair"]').forEach(function (f) {
+      currentSub().then(function (s) {
+        if (!s) return;
+        var inp = f.querySelector('input[name="push_endpoint"]') || document.createElement('input');
+        inp.type = 'hidden'; inp.name = 'push_endpoint'; inp.value = s.endpoint; f.appendChild(inp);
+      });
+    });
+
+    var card = $('[data-push]');
+    if (!card) return;
+    var iosBlocked = isIos() && !isStandalone();
+    if (!canPush && !iosBlocked) return; // navegador sem suporte: o cartão continua escondido
+    card.hidden = false;
+    var on = $('[data-push-on]', card), off = $('[data-push-off]', card), state = $('[data-push-state]', card);
+    if (iosBlocked) { $('[data-push-ios]', card).hidden = false; on.hidden = true; return; }
+    if (Notification.permission === 'denied') { $('[data-push-denied]', card).hidden = false; on.hidden = true; return; }
+
+    var known = (card.getAttribute('data-hashes') || '').split(',');
+    currentSub().then(function (s) {
+      if (!s) return;
+      return sha256Hex(s.endpoint).then(function (h) {
+        if (known.indexOf(h) === -1) return; // assinado no navegador, mas não na conta: oferece ativar
+        on.hidden = true; off.hidden = false;
+        off.querySelector('input[name="endpoint"]').value = s.endpoint;
+        state.textContent = 'Ativas neste aparelho.';
+      });
+    });
+  }
+
+  document.addEventListener('submit', function (e) {
+    var form = e.target;
+    if (!form.hasAttribute('data-push-on') || form._pushReady) return;
+    e.preventDefault();
+    var card = form.closest('[data-push]');
+    Notification.requestPermission().then(function (perm) {
+      if (perm !== 'granted') {
+        if (perm === 'denied') { $('[data-push-denied]', card).hidden = false; form.hidden = true; }
+        throw new Error('sem permissão');
+      }
+      return navigator.serviceWorker.ready;
+    }).then(function (reg) {
+      return reg.pushManager.getSubscription().then(function (s) {
+        return s || reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: b64ToBytes(card.getAttribute('data-key')) });
+      });
+    }).then(function (s) {
+      form.querySelector('input[name="endpoint"]').value = s.endpoint;
+      form.querySelector('input[name="p256dh"]').value = bytesToB64(s.getKey('p256dh'));
+      form.querySelector('input[name="auth"]').value = bytesToB64(s.getKey('auth'));
+      form._pushReady = true;
+      // Fora do evento atual: o navegador ignora requestSubmit enquanto o primeiro envio ainda está sendo tratado.
+      setTimeout(function () { if (form.requestSubmit) form.requestSubmit(); else form.submit(); }, 0);
+    }).catch(function (err) {
+      if (!err || err.message !== 'sem permissão') toast('Não foi possível ativar as notificações');
+    });
+  }, true);
+
+  document.addEventListener('submit', function (e) {
+    var form = e.target;
+    if (!form.hasAttribute('data-push-off')) return;
+    // Cancela também no navegador; o envio do formulário segue normalmente.
+    currentSub().then(function (s) { if (s) s.unsubscribe(); });
+  });
+
+  if (window.Turbo) document.addEventListener('turbo:load', setupPush);
+  else document.addEventListener('DOMContentLoaded', setupPush);
+
   if ('serviceWorker' in navigator && window.isSecureContext) {
     window.addEventListener('load', function () { navigator.serviceWorker.register('/sw.js').catch(function () {}); });
   }

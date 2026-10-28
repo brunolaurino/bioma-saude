@@ -19,8 +19,15 @@ class AppNotification extends Model
         return ['read_at' => 'datetime'];
     }
 
-    public static function send(string $userId, string $icon, string $text, ?string $link = null): self
+    /**
+     * Cria a notificação do sino e avisa os aparelhos com push. O push leva $pushText só quando
+     * quem chama garante que o texto é genérico (lembretes); senão vai o aviso padrão.
+     */
+    public static function send(string $userId, string $icon, string $text, ?string $link = null, ?string $pushText = null): self
     {
-        return self::create(['user_id' => $userId, 'icon' => $icon, 'text' => $text, 'link' => $link]);
+        $n = self::create(['user_id' => $userId, 'icon' => $icon, 'text' => $text, 'link' => $link]);
+        \App\Domain\Push::toUser($userId, $pushText, $link);
+
+        return $n;
     }
 }

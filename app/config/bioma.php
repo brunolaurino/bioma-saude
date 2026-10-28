@@ -54,6 +54,14 @@ return [
 
     'export_hours' => 24,
 
+    // Notificações push (Web Push). Sem as chaves VAPID o push fica desligado e o app segue só
+    // com o sino e o e-mail. Gere com scripts/gerar-segredos.sh.
+    'push' => [
+        'public_key' => env('BIOMA_VAPID_PUBLIC'),
+        'private_key' => env('BIOMA_VAPID_PRIVATE'),
+        'subject' => env('BIOMA_VAPID_SUBJECT', 'mailto:'.env('MAIL_FROM_ADDRESS', 'contato@example.com')),
+    ],
+
     // Dias que um pedido do titular tem para ser atendido (LGPD art. 19).
     'dsr_days' => 15,
 

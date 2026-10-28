@@ -32,5 +32,7 @@
   </form>
 </x-section>
 
+<x-section title="Notificações" class="max-lg"><x-push-card /></x-section>
+
 <form method="POST" action="{{ route('logout') }}" class="max-lg">@csrf<button class="bc-btn bc-btn--ghost bc-btn--block c-bad"><x-ic n="right-from-bracket" /> Sair do painel</button></form>
 @endsection

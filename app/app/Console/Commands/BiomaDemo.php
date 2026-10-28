@@ -123,6 +123,9 @@ class BiomaDemo extends Command
             ['Paciente', 'carlos@demo.bioma.local', '-'],
         ]);
         $this->line('Convite de primeiro acesso da Luiza Martins: '.$code);
+        $this->newLine();
+        $this->line('Profissionais: a chave acima NÃO é o código. Cadastre a chave no app autenticador (Google Authenticator,');
+        $this->line('1Password…) e digite os 6 dígitos que ele mostra. Sem celular: php artisan bioma:codigo marina@demo.bioma.local');
 
         return self::SUCCESS;
     }

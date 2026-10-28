@@ -5,6 +5,7 @@ use App\Http\Controllers\FileController;
 use App\Http\Controllers\Patient;
 use App\Http\Controllers\Pro;
 use App\Http\Controllers\PublicController;
+use App\Http\Controllers\PushController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,6 +40,8 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::post('/sair', [Auth\LoginController::class, 'logout'])->name('logout');
+    Route::post('/push/assinar', [PushController::class, 'subscribe'])->middleware(['timeouts', 'throttle:sensitive'])->name('push.subscribe');
+    Route::post('/push/cancelar', [PushController::class, 'unsubscribe'])->middleware('timeouts')->name('push.unsubscribe');
     Route::get('/2fa/configurar', [Auth\TwoFactorController::class, 'setup'])->name('2fa.setup');
     Route::post('/2fa/configurar', [Auth\TwoFactorController::class, 'confirm'])->middleware('throttle:sensitive');
     Route::get('/2fa/codigos', [Auth\TwoFactorController::class, 'codes'])->name('2fa.codes');

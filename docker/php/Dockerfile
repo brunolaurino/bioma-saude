@@ -8,10 +8,10 @@ COPY app/ ./
 RUN composer dump-autoload --optimize --classmap-authoritative --no-dev
 
 FROM php:8.4-fpm-alpine AS app
-RUN apk add --no-cache libpng libjpeg-turbo freetype libzip icu-libs \
- && apk add --no-cache --virtual .build $PHPIZE_DEPS libpng-dev libjpeg-turbo-dev freetype-dev libzip-dev icu-dev \
+RUN apk add --no-cache libpng libjpeg-turbo freetype libzip icu-libs gmp \
+ && apk add --no-cache --virtual .build $PHPIZE_DEPS libpng-dev libjpeg-turbo-dev freetype-dev libzip-dev icu-dev gmp-dev \
  && docker-php-ext-configure gd --with-jpeg --with-freetype \
- && docker-php-ext-install -j"$(nproc)" pdo_mysql opcache gd exif zip intl \
+ && docker-php-ext-install -j"$(nproc)" pdo_mysql opcache gd exif zip intl gmp \
  && pecl install redis && docker-php-ext-enable redis \
  && apk del .build \
  && rm -rf /tmp/pear

@@ -76,7 +76,7 @@ class TwoFactorController extends Controller
 
     public function verify(Request $request)
     {
-        $request->validate(['code' => ['required', 'string', 'max:20']], ['code.required' => 'Digite o código.']);
+        $request->validate(['code' => ['required', 'string', 'max:64']], ['code.required' => 'Digite o código.', 'code.max' => 'Digite o código de 6 dígitos do app autenticador.']);
         $user = $request->user();
         $code = (string) $request->input('code');
 
@@ -86,8 +86,12 @@ class TwoFactorController extends Controller
 
         if (! $ok) {
             Audit::log('auth.2fa.fail', 'user:'.$user->id);
+            // Erro comum: colar a chave do 2FA (texto longo) no lugar do código de 6 dígitos.
+            $looksLikeKey = preg_match('/^[A-Z2-7]{16,}$/', strtoupper(preg_replace('/\s+/', '', $code)));
 
-            return back()->withErrors(['code' => 'Código incorreto.']);
+            return back()->withErrors(['code' => $looksLikeKey
+                ? 'Isso é a chave do 2FA, não o código. Cadastre a chave no app autenticador e digite os 6 dígitos que ele mostra.'
+                : 'Código incorreto. Confira se o relógio do celular está no automático e use o código que está aparecendo agora.']);
         }
 
         $request->session()->regenerate();

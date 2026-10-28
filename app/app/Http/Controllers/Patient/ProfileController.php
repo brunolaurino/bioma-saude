@@ -183,10 +183,12 @@ class ProfileController extends Controller
         if (config('session.driver') === 'database') {
             DB::table('sessions')->where('user_id', $request->user()->id)->where('id', '!=', $request->session()->getId())->delete();
         }
+        // Os aparelhos desconectados também param de receber push; este pode ativar de novo no perfil.
+        \App\Domain\Push::unsubscribe($request->user());
         Audit::log('auth.sessions.end_others', 'user:'.$request->user()->id);
     }
 
-    private static function agent(string $ua): string
+    public static function agent(string $ua): string
     {
         $os = match (true) {
             str_contains($ua, 'iPhone') => 'iPhone', str_contains($ua, 'iPad') => 'iPad', str_contains($ua, 'Android') => 'Android',

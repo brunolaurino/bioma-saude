@@ -52,7 +52,7 @@ class BiomaLembretes extends Command
                 $last = isset($prefs[$key]) && $prefs[$key]->last_sent_at ? Clock::local(CarbonImmutable::parse($prefs[$key]->last_sent_at, 'UTC')) : null;
                 if ($this->due($key, $now, $last, $p)) {
                     [$icon, $text, $route] = self::TEXT[$key];
-                    AppNotification::send($p->user_id, $icon, $text, route($route));
+                    AppNotification::send($p->user_id, $icon, $text, route($route), $text);
                     DB::table('reminder_prefs')->updateOrInsert(['patient_id' => $p->id, 'key' => $key], ['enabled' => true, 'last_sent_at' => now(), 'updated_at' => now()]);
                     $sent++;
                 }

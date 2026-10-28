@@ -20,7 +20,7 @@ x-app: &app
   security_opt: [no-new-privileges:true]
   cap_drop: [ALL]
   networks: [interna]
-  secrets: [app_key, db_password, redis_password, bioma_kek, bioma_index_key]
+  secrets: [app_key, db_password, redis_password, bioma_kek, bioma_index_key, vapid_public, vapid_private]
   environment: &env
     APP_NAME: "Saúde App"
     APP_ENV: production
@@ -136,5 +136,7 @@ secrets:
   redis_password: { file: ./secrets/redis_password }
   bioma_kek: { file: ./secrets/bioma_kek }
   bioma_index_key: { file: ./secrets/bioma_index_key }
+  vapid_public: { file: ./secrets/vapid_public }
+  vapid_private: { file: ./secrets/vapid_private }
 
 volumes: { storage: {}, logs: {}, sessions: {}, views: {}, db: {}, redis: {}, caddy_data: {}, caddy_config: {} }

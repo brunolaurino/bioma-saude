@@ -78,6 +78,10 @@ class LoginController extends Controller
     public function logout(Request $request)
     {
         Audit::log('auth.logout', 'user:'.$request->user()->id);
+        // Este aparelho para de receber push da conta (o app.js manda o endereço da assinatura).
+        if (is_string($endpoint = $request->input('push_endpoint')) && $endpoint !== '') {
+            \App\Domain\Push::unsubscribe($request->user(), mb_substr($endpoint, 0, 1000));
+        }
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();

@@ -167,6 +167,7 @@ class PrivacyController extends Controller
             $patient->update(['status' => 'closing']);
             $user->forceFill(['status' => 'closed', 'password' => null])->save();
             DB::table('sessions')->where('user_id', $user->id)->delete();
+            \App\Models\PushSubscription::where('user_id', $user->id)->delete();
             Audit::log('privacy.account_closed', 'patient:'.$patient->id, $patient->id);
             foreach (Professional::where('role', 'master')->pluck('user_id') as $uid) {
                 AppNotification::send($uid, 'user-xmark', 'Um paciente encerrou a conta. Há um pedido de eliminação para tratar.', route('pro.requests'));

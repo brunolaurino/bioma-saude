@@ -26,7 +26,7 @@ php artisan serve
 ```
 
 Abra `http://127.0.0.1:8000`. Senha de todas as contas de demonstração: `bioma-demo-2026`.
-Profissionais pedem o código do app autenticador: cadastre a chave mostrada pelo `bioma:demo` no Google Authenticator, 1Password ou similar.
+Profissionais pedem o código do app autenticador: cadastre a chave mostrada pelo `bioma:demo` no Google Authenticator, 1Password ou similar e digite os 6 dígitos que o app mostra (a chave em si não é o código). Sem celular, na demo: `php artisan bioma:codigo marina@demo.bioma.local`.
 
 | Conta | E-mail |
 | --- | --- |
@@ -50,6 +50,8 @@ docker compose exec app php artisan bioma:master   # link de uso único para cri
 
 O master abre o link, cria a conta, ativa o 2FA e passa pelo assistente: consultório, controlador e encarregado (LGPD), funções do app e aviso de privacidade.
 
+Quem já tinha subido antes do push: rode `bash scripts/gerar-segredos.sh` de novo (só cria as chaves VAPID que faltam, não mexe nas outras) e depois `docker compose up -d --build`.
+
 **Guarde `secrets/` fora do servidor.** Sem `bioma_kek` os dados de saúde ficam ilegíveis para sempre.
 
 ## Segurança e LGPD (resumo)
@@ -60,6 +62,7 @@ O master abre o link, cria a conta, ativa o 2FA e passa pelo assistente: consult
 - Auditoria só de inserção, encadeada por hash: quem abriu qual prontuário, aba, arquivo e desabafo. O paciente vê quem acessou os dados dele.
 - Desabafos são privados por padrão. Fotos pedem consentimento, e retirar o consentimento apaga as fotos.
 - Paciente baixa todos os dados (ZIP com JSON, planilhas e leitura fácil), faz pedidos de titular e pode encerrar a conta. O master responde os pedidos com prazo de 15 dias e registra incidentes.
+- Notificações push (Web Push com chaves VAPID, sem serviço de terceiros além do push do próprio navegador): a mensagem só diz "Você tem uma nova notificação" ou o texto genérico do lembrete, nunca dado de saúde. O endereço de push some ao sair da conta, ao sair dos outros aparelhos e ao encerrar a conta.
 - CSP rígida, sem script nem estilo inline. Tudo funciona mesmo sem JavaScript.
 
 ## Comandos
@@ -73,10 +76,15 @@ O master abre o link, cria a conta, ativa o 2FA e passa pelo assistente: consult
 | Lembretes (agendado a cada 15 min) | `php artisan bioma:lembretes` |
 | Limpeza diária (agendada) | `php artisan bioma:retencao` |
 | Dados de demonstração | `php artisan bioma:demo` (só fora de produção e com banco vazio) |
+| Código do 2FA de uma conta da demo | `php artisan bioma:codigo marina@demo.bioma.local` (só fora de produção) |
+
+## Notificações push
+
+O paciente ativa em **Perfil › Notificações no celular** e a equipe em **Minha conta**. Funciona no Android (Chrome, Edge, Firefox) e no computador. No iPhone, só com o app adicionado à tela de início (iOS 16.4 ou mais novo). Os envios vão pela fila (`worker`), junto dos lembretes e avisos do sino. Sem `BIOMA_VAPID_PUBLIC` e `BIOMA_VAPID_PRIVATE` o cartão não aparece e nada é enviado.
 
 ## Ainda não incluído
 
-- Entrar com biometria (passkeys) e notificações push no celular: hoje os avisos ficam dentro do app.
+- Entrar com biometria (passkeys).
 - Fotos HEIC do iPhone são recusadas com instrução para enviar em JPG.
 - A exportação de dados sai em ZIP (JSON, CSV e uma página para ler), não em PDF.
 - KMS do provedor de nuvem para a KEK e banco separado para as chaves (o código já aceita `BIOMA_KEYRING_CONNECTION`).

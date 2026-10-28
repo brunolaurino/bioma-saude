@@ -12,6 +12,9 @@ export REDIS_PASSWORD="$(read_secret redis_password)"
 # Em produção a KEK deve vir do KMS do provedor; este arquivo é o adaptador local.
 export BIOMA_KEK="$(read_secret bioma_kek)"
 export BIOMA_INDEX_KEY="$(read_secret bioma_index_key)"
+# Chaves VAPID das notificações push. Sem elas o app funciona, só sem push.
+[ -f /run/secrets/vapid_public ] && export BIOMA_VAPID_PUBLIC="$(cat /run/secrets/vapid_public)"
+[ -f /run/secrets/vapid_private ] && export BIOMA_VAPID_PRIVATE="$(cat /run/secrets/vapid_private)"
 # Senha do SMTP é opcional: crie secrets/mail_password e adicione o segredo no compose se usar.
 [ -f /run/secrets/mail_password ] && export MAIL_PASSWORD="$(cat /run/secrets/mail_password)"
 

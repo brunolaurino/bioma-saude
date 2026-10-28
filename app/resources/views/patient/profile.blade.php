@@ -29,10 +29,11 @@
   @if ($m['lembretes'])<x-list-link :href="route('profile.reminders')" icon="bell" label="Lembretes" hint="Água, metas, terapia" />@endif
   @if ($m['equipe'])<x-list-link :href="route('profile.team')" icon="users" label="Minha equipe" />@endif
   <x-list-link :href="route('privacy')" icon="shield-halved" label="Privacidade e dados" hint="Consentimentos, exportar, pedidos" />
-  <x-list-link :href="route('profile.sessions')" icon="laptop-mobile" label="Aparelhos conectados" />
+  <x-list-link :href="route('profile.sessions')" icon="mobile-screen" label="Aparelhos conectados" />
   <x-list-link :href="route('profile.password')" icon="key" label="Trocar senha" />
   <x-list-link :href="route('help')" icon="circle-question" label="Ajuda" />
 </div>
+<x-push-card />
 <form method="POST" action="{{ route('logout') }}" class="bc-card" data-confirm="Sair da conta?" data-confirm-text="Você vai precisar do e-mail e da senha para entrar de novo." data-confirm-label="Sair">
   @csrf
   <button class="bc-listrow bc-listrow--danger w-full"><span class="bc-listrow__icon"><x-ic n="right-from-bracket" /></span><span class="bc-listrow__text">Sair</span></button>

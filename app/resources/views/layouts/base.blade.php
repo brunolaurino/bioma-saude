@@ -22,7 +22,7 @@
 <link rel="stylesheet" href="/css/app.css?v=2" data-turbo-track="reload">
 <link rel="stylesheet" href="/css/theme.css?v=2" data-turbo-track="reload">
 <script src="/vendor/turbo/turbo.js?v=8.0.12" defer data-turbo-track="reload"></script>
-<script src="/js/app.js?v=2" defer data-turbo-track="reload"></script>
+<script src="/js/app.js?v=3" defer data-turbo-track="reload"></script>
 </head>
 <body>
 <a class="skip" href="#conteudo">Pular para o conteúdo</a>

@@ -36,6 +36,17 @@ class AuthTest extends TestCase
         $this->get('/painel')->assertRedirect(route('2fa.challenge'));
     }
 
+    public function test_colar_a_chave_no_lugar_do_codigo_explica_o_erro(): void
+    {
+        $this->demo();
+        $user = User::findByEmail('marina@demo.bioma.local');
+        $this->post('/entrar', ['email' => 'marina@demo.bioma.local', 'password' => 'bioma-demo-2026']);
+        $this->post('/2fa', ['code' => $user->two_factor_secret])
+            ->assertSessionHasErrors(['code' => 'Isso é a chave do 2FA, não o código. Cadastre a chave no app autenticador e digite os 6 dígitos que ele mostra.']);
+        $this->artisan('bioma:codigo', ['email' => 'marina@demo.bioma.local'])->assertSuccessful();
+        $this->artisan('bioma:codigo', ['email' => 'alguem@exemplo.com'])->assertFailed();
+    }
+
     public function test_codigo_correto_libera_o_painel(): void
     {
         $this->demo();
