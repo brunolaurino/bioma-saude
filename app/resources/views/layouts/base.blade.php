@@ -6,19 +6,23 @@
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#0f3d25">
 <meta name="robots" content="noindex, nofollow">
+{{-- Navegação sem recarregar (Turbo). Sem cache de páginas: dados de saúde não ficam guardados para o botão Voltar. --}}
+<meta name="turbo-cache-control" content="no-cache">
+<meta name="view-transition" content="same-origin">
 <title>{{ $title ?? 'Saúde App' }} · Saúde App</title>
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="icon" href="/icons/icon.svg" type="image/svg+xml">
 <link rel="icon" href="/icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="/icons/icon-192.png">
-<link rel="stylesheet" href="/css/tokens.css?v=2">
-<link rel="stylesheet" href="/css/components.css?v=2">
+<link rel="stylesheet" href="/css/tokens.css?v=2" data-turbo-track="reload">
+<link rel="stylesheet" href="/css/components.css?v=2" data-turbo-track="reload">
 <link rel="stylesheet" href="/vendor/fontawesome/css/fontawesome.min.css">
 <link rel="stylesheet" href="/vendor/fontawesome/css/solid.min.css">
 <link rel="stylesheet" href="/vendor/fontawesome/css/regular.min.css">
-<link rel="stylesheet" href="/css/app.css?v=2">
-<link rel="stylesheet" href="/css/theme.css?v=1">
-<script src="/js/app.js?v=1" defer></script>
+<link rel="stylesheet" href="/css/app.css?v=2" data-turbo-track="reload">
+<link rel="stylesheet" href="/css/theme.css?v=2" data-turbo-track="reload">
+<script src="/vendor/turbo/turbo.js?v=8.0.12" defer data-turbo-track="reload"></script>
+<script src="/js/app.js?v=2" defer data-turbo-track="reload"></script>
 </head>
 <body>
 <a class="skip" href="#conteudo">Pular para o conteúdo</a>

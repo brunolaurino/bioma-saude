@@ -4,7 +4,7 @@
 <x-section title="Análise de composição corporal"><x-composition :rec="$cur" :prev="$prev" /></x-section>
 <x-section title="Laudo anexado">
   @if ($file)
-    <a class="bc-card bc-card--action row-item" href="{{ route('files.show', [$file, 'ver' => 1]) }}" target="_blank" rel="noopener">
+    <a data-turbo="false" class="bc-card bc-card--action row-item" href="{{ route('files.show', [$file, 'ver' => 1]) }}" target="_blank" rel="noopener">
       <span class="pdf-thumb"><x-ic :n="$file->mime === 'application/pdf' ? 'file-pdf' : 'file-image'" /></span>
       <span class="grow bold truncate">{{ $file->name }}</span><x-ic n="up-right-from-square" class="muted" />
     </a>

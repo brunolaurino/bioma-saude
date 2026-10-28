@@ -6,7 +6,7 @@
         <span class="pdf-thumb"><x-ic :n="$current->mime === 'application/pdf' ? 'file-pdf' : 'file-image'" /></span>
         <div class="grow"><div class="bold truncate">{{ $current->name }}</div><div class="t-caption muted">Enviado em {{ Fmt::dmy($current->taken_on) }}{{ isset($names[$current->uploaded_by]) ? ' por '.$names[$current->uploaded_by] : '' }} · {{ Fmt::size($current->size) }}</div></div>
       </div>
-      <a class="bc-btn bc-btn--primary bc-btn--block" href="{{ route('files.show', [$current, 'ver' => 1]) }}" target="_blank" rel="noopener"><x-ic n="eye" /> Abrir</a>
+      <a data-turbo="false" class="bc-btn bc-btn--primary bc-btn--block" href="{{ route('files.show', [$current, 'ver' => 1]) }}" target="_blank" rel="noopener"><x-ic n="eye" /> Abrir</a>
     </div>
   @else
     <x-empty icon="file-circle-plus" title="Nenhum plano anexado" text="O plano alimentar aparece aqui quando for enviado." />
@@ -22,7 +22,7 @@
   @if ($old->isNotEmpty())
     <details class="faq mt-2">
       <summary>Versões anteriores ({{ $old->count() }})</summary>
-      <ul class="plain stack-2 mt-2">@foreach ($old as $p)<li class="flex t-body-sm"><x-ic n="file-pdf" /><a class="grow truncate bc-link" href="{{ route('files.show', [$p, 'ver' => 1]) }}" target="_blank" rel="noopener">{{ $p->name }}</a><span class="muted">{{ Fmt::dm($p->taken_on) }}</span></li>@endforeach</ul>
+      <ul class="plain stack-2 mt-2">@foreach ($old as $p)<li class="flex t-body-sm"><x-ic n="file-pdf" /><a data-turbo="false" class="grow truncate bc-link" href="{{ route('files.show', [$p, 'ver' => 1]) }}" target="_blank" rel="noopener">{{ $p->name }}</a><span class="muted">{{ Fmt::dm($p->taken_on) }}</span></li>@endforeach</ul>
     </details>
   @endif
 </x-section>

@@ -58,7 +58,7 @@
     @else
       <div class="bc-card divide">
         @foreach ($exams as $e)
-          <a class="row-item link-row" href="{{ route('files.show', [$e, 'ver' => 1]) }}" target="_blank" rel="noopener">
+          <a data-turbo="false" class="row-item link-row" href="{{ route('files.show', [$e, 'ver' => 1]) }}" target="_blank" rel="noopener">
             <span class="pdf-thumb"><x-ic :n="$e->mime === 'application/pdf' ? 'file-pdf' : 'file-image'" /></span>
             <div class="grow"><div class="bold truncate">{{ $e->name }}</div><div class="t-caption muted">{{ $e->label ?? 'Laudo' }} · {{ Fmt::dm($e->taken_on) }} · {{ Fmt::size($e->size) }}</div></div>
             <x-ic n="eye" class="muted" />

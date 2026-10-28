@@ -29,11 +29,19 @@
   }
   function hideLater(el) { setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 3200); }
 
-  document.addEventListener('DOMContentLoaded', function () {
+  function onPage() {
     all('[data-toast]').forEach(hideLater);
     all('dialog[data-open-now]').forEach(openDialog);
     if (location.hash === '#instalar') openDialog($('#sheet-install'));
-  });
+  }
+  // Com o Turbo, turbo:load roda na primeira carga e a cada troca de tela; sem ele, vale o DOMContentLoaded.
+  if (window.Turbo) {
+    document.addEventListener('turbo:load', onPage);
+    // Diálogos abertos não devem sobreviver à troca de tela.
+    document.addEventListener('turbo:before-cache', function () { all('dialog[open]').forEach(closeDialog); });
+  } else {
+    document.addEventListener('DOMContentLoaded', onPage);
+  }
 
   document.addEventListener('click', function (e) {
     var t = e.target.closest ? e.target : e.target.parentElement;

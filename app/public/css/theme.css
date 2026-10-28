@@ -216,3 +216,7 @@ body { background: radial-gradient(700px 420px at 100% -10%, rgba(124, 201, 154,
 
 @media (prefers-reduced-motion: reduce) { .bc-btn--primary:hover, .bc-card--action:hover, .tile:hover .tile__ic { transform: none; } }
 .entry .brand-mark--xl { align-self: center; margin-left: auto; margin-right: auto; }
+
+/* Navegação sem recarregar (Turbo): barra de progresso e transição suave entre telas */
+.turbo-progress-bar { height: 3px; background: linear-gradient(90deg, #3fa76a, var(--lime)); }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: .18s; }

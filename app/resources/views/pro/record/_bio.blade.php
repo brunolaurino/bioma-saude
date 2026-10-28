@@ -16,7 +16,7 @@
                 @php($tn = $pv ? Indicators::toneOfDelta($b[$k] - $pv[$k], $i['dir']) : null)
                 <td class="num {{ $tn ? 'c-'.$tn : '' }}">{{ Fmt::num($b[$k], $i['dec']) }}</td>
               @endforeach
-              <td>@if ($b['file_id'] && isset($files[$b['file_id']]))<a href="{{ route('files.show', $b['file_id']) }}" aria-label="Baixar laudo de {{ Fmt::dm($b['d']) }}"><x-ic :n="$files[$b['file_id']]->mime === 'application/pdf' ? 'file-pdf' : 'file-image'" /></a>@else<span class="muted">—</span>@endif</td>
+              <td>@if ($b['file_id'] && isset($files[$b['file_id']]))<a data-turbo="false" href="{{ route('files.show', $b['file_id']) }}" aria-label="Baixar laudo de {{ Fmt::dm($b['d']) }}"><x-ic :n="$files[$b['file_id']]->mime === 'application/pdf' ? 'file-pdf' : 'file-image'" /></a>@else<span class="muted">—</span>@endif</td>
             </tr>
           @endforeach
         </tbody>

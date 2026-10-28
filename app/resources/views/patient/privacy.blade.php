@@ -5,7 +5,7 @@
   <div class="notice notice--ok">
     <span class="ic"><x-ic n="file-zipper" /></span>
     <div class="grow t-caption"><b>Seus dados estão prontos</b>Arquivo ZIP com planilhas, um resumo para leitura e seus arquivos. Vale por 24 horas.</div>
-    <a class="bc-btn bc-btn--primary bc-btn--sm" href="{{ route('privacy.download', session('export_token')) }}"><x-ic n="download" /> Baixar</a>
+    <a data-turbo="false" class="bc-btn bc-btn--primary bc-btn--sm" href="{{ route('privacy.download', session('export_token')) }}"><x-ic n="download" /> Baixar</a>
   </div>
 @endif
 

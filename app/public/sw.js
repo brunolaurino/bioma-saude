@@ -1,7 +1,7 @@
 /* Service worker do Saúde App. Guarda só a casca do app (CSS, JS, fontes, ícones).
    Páginas e arquivos com dados de saúde nunca vão para o cache. */
-const CACHE = 'saude-shell-v2';
-const SHELL = ['/css/tokens.css?v=2', '/css/components.css?v=2', '/css/app.css?v=2', '/css/theme.css?v=1', '/js/app.js?v=1', '/offline.html', '/icons/icon-192.png'];
+const CACHE = 'saude-shell-v3';
+const SHELL = ['/css/tokens.css?v=2', '/css/components.css?v=2', '/css/app.css?v=2', '/css/theme.css?v=2', '/vendor/turbo/turbo.js?v=8.0.12', '/js/app.js?v=2', '/offline.html', '/icons/icon-192.png'];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting()));
