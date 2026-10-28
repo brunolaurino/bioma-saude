@@ -1,0 +1,2 @@
+Turbo 8.0.12 (https://turbo.hotwired.dev) — Copyright (c) 2024 37signals LLC — Licença MIT.
+Arquivo copiado sem alterações de @hotwired/turbo/dist/turbo.es2017-umd.js.

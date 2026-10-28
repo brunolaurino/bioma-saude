@@ -1,0 +1,1 @@
+@include('errors.layout', ['icon' => 'lock', 'heading' => 'Sem acesso a esta parte', 'text' => $exception->getMessage() ?: 'Esta função está desligada ou não foi liberada para você. Fale com o responsável pelo consultório.'])
